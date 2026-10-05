@@ -8,6 +8,7 @@ import upload_icon from '../../assets/upload.png'
 import notification_icon from '../../assets/notification.png'
 import more_icon from '../../assets/more.png'
 import profile_icon from '../../assets/haritha.png'
+// import profile_icon from '../../assets/jack.png'
 
 const Navbar = () => {
   return (
@@ -17,8 +18,10 @@ const Navbar = () => {
             <img className='logo' src={logo} alt="logo" />
         </div>
         <div className='nav-middle flex-div'>
-            <input type="text" placeholder='Search' />
-            <img className='search-icon' src={search_icon} alt="search-icon" />
+            <div className='search-box flex-div'>
+                <input type="text" placeholder='Search' />
+                <img className='search-icon' src={search_icon} alt="search-icon" />
+            </div>
         </div>
         <div className='nav-right flex-div'>
             <img className='upload-icon' src={upload_icon} alt="upload-icon" />
