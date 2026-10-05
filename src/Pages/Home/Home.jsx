@@ -1,12 +1,13 @@
 // eslint-disable-next-line no-unused-vars
 import React from 'react'
 import './Home.css'
+import Sidebar from '../../Components/Sidebar/Sidebar'
 
-const Home = () => {
+const Home = ({sidebar}) => {
   return (
-    <div>
-        
-    </div>
+    <>
+    <Sidebar sidebar={sidebar} />
+    </>
   )
 }
 
