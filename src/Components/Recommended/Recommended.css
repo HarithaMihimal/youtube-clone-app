@@ -1,0 +1,102 @@
+.recommended {
+    flex-basis: 30%;
+    min-width: 280px;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.recommended-card {
+    display: grid;
+    grid-template-columns: minmax(120px, 45%) 1fr;
+    column-gap: 12px;
+    margin-bottom: 16px;
+    padding: 8px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 160ms ease, transform 160ms ease;
+}
+
+.recommended-card:hover {
+    background-color: #f2f2f2;
+    transform: translateY(-1px);
+}
+
+.recommended-card img {
+    grid-row: 1 / span 3;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.recommended-card p {
+    overflow: hidden;
+    margin: 0 0 5px;
+    color: #606060;
+    font-size: 12px;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.recommended-card p:first-of-type {
+    color: #0f0f0f;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.35;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.recommended-card p:last-child {
+    .recommended-card {
+        color: var(--ink);
+        transition: background-color 160ms ease, transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .recommended-card:hover {
+        box-shadow: 0 5px 16px rgba(23, 32, 42, 0.06);
+    }
+
+    .recommended-card p:first-of-type {
+        color: var(--ink);
+    }
+
+    .recommended-card p {
+        color: var(--muted);
+    }
+
+    .recommended-card img {
+        box-shadow: 0 3px 10px rgba(23, 32, 42, 0.08);
+    }
+
+    margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+    .recommended {
+        flex-basis: 100%;
+        max-height: none;
+        margin-top: 24px;
+        padding-right: 0;
+    }
+
+    .recommended-card {
+        grid-template-columns: minmax(180px, 32%) 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .recommended-card {
+        grid-template-columns: minmax(120px, 42%) 1fr;
+        column-gap: 10px;
+        padding: 6px 0;
+    }
+
+    .recommended-card p:first-of-type {
+        font-size: 13px;
+    }
+}
