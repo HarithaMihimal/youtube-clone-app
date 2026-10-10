@@ -86,6 +86,15 @@ nav {
     height: 34px;
 }
 
+.nav-right > a {
+    border-radius: 50%;
+}
+
+.nav-right > a:focus-visible {
+    outline: 3px solid var(--accent-soft);
+    outline-offset: 2px;
+}
+
 @media (max-width: 680px) {
     nav {
         gap: 12px;

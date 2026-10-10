@@ -33,7 +33,9 @@ const Navbar = ({setSidebar}) => {
             <img className='upload-icon' src={upload_icon} alt="upload-icon" />
             <img className='notification-icon' src={notification_icon} alt="notification-icon" />
             <img className='more-icon' src={more_icon} alt="more-icon" />
-            <img className='user-icon' src={profile_icon} alt="user-icon" />
+            <Link to='/profile' aria-label="Open your profile">
+                <img className='user-icon' src={profile_icon} alt="user profile" />
+            </Link>
         </div>
     </nav>
   )
