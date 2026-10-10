@@ -1,0 +1,248 @@
+.profile-page {
+    min-height: calc(100vh - 64px);
+    padding: clamp(24px, 5vw, 58px) clamp(16px, 7vw, 110px);
+    background: var(--canvas);
+}
+
+.profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 28px;
+    max-width: 1080px;
+    margin: 0 auto;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--line);
+}
+
+.profile-identity {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.profile-avatar {
+    width: clamp(92px, 13vw, 144px);
+    height: clamp(92px, 13vw, 144px);
+    border: 5px solid var(--surface);
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: var(--shadow);
+}
+
+.profile-eyebrow {
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.profile-header h1 {
+    margin: 5px 0 3px;
+    font-size: clamp(25px, 4vw, 38px);
+    line-height: 1.1;
+}
+
+.profile-handle,
+.profile-bio,
+.profile-video-card p,
+.video-count,
+.profile-about p {
+    color: var(--muted);
+}
+
+.profile-handle {
+    font-size: 14px;
+}
+
+.profile-bio {
+    max-width: 480px;
+    margin-top: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.manage-profile {
+    flex-shrink: 0;
+    border: 0;
+    border-radius: 999px;
+    padding: 11px 18px;
+    color: #fff;
+    background: var(--ink);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.manage-profile:hover {
+    background: var(--accent-dark);
+}
+
+.profile-stats {
+    display: flex;
+    gap: clamp(28px, 7vw, 92px);
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 25px 0;
+}
+
+.profile-stats div {
+    display: grid;
+    gap: 4px;
+}
+
+.profile-stats strong {
+    font-size: 21px;
+}
+
+.profile-stats span {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.profile-tabs {
+    display: flex;
+    gap: 26px;
+    max-width: 1080px;
+    margin: 0 auto 30px;
+    border-bottom: 1px solid var(--line);
+}
+
+.profile-tab {
+    border: 0;
+    border-bottom: 2px solid transparent;
+    padding: 13px 4px 12px;
+    color: var(--muted);
+    background: transparent;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.profile-tab.active {
+    border-color: var(--accent);
+    color: var(--ink);
+}
+
+.profile-content,
+.profile-about {
+    max-width: 1080px;
+    margin: 0 auto;
+}
+
+.profile-section-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.profile-section-heading h2,
+.profile-about h2 {
+    margin-top: 5px;
+    font-size: 23px;
+}
+
+.video-count {
+    font-size: 12px;
+}
+
+.profile-video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+    gap: 26px 18px;
+}
+
+.profile-video-card {
+    min-width: 0;
+}
+
+.profile-video-card img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: var(--shadow);
+    transition: transform .18s ease;
+}
+
+.profile-video-card:hover img {
+    transform: translateY(-3px);
+}
+
+.profile-video-card h3 {
+    display: -webkit-box;
+    overflow: hidden;
+    margin: 11px 2px 6px;
+    font-size: 14px;
+    line-height: 1.4;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.profile-video-card p {
+    margin: 0 2px;
+    font-size: 12px;
+}
+
+.profile-video-card p span {
+    margin: 0 4px;
+}
+
+.profile-about {
+    max-width: 680px;
+    margin-left: max(0px, calc((100% - 1080px) / 2));
+    padding: 10px 0 50px;
+}
+
+.profile-about p {
+    margin-top: 18px;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.profile-about .profile-joined {
+    font-size: 13px;
+}
+
+@media (max-width: 600px) {
+    .profile-page {
+        padding-inline: 14px;
+        padding-bottom: 82px;
+    }
+
+    .profile-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .profile-identity {
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .profile-avatar {
+        width: 78px;
+        height: 78px;
+        border-width: 3px;
+    }
+
+    .profile-bio {
+        margin-top: 8px;
+    }
+
+    .manage-profile {
+        margin-left: 94px;
+        margin-top: -16px;
+    }
+
+    .profile-stats {
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .profile-stats strong {
+        font-size: 18px;
+    }
+}

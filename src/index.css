@@ -42,3 +42,44 @@ input {
   display: flex;
   align-items: center;
 }
+
+.app-shell {
+  min-height: 100vh;
+  background: var(--canvas);
+  transition: background .2s ease, color .2s ease;
+}
+
+.dark-theme {
+  --ink: #edf2f7;
+  --muted: #9aa8b6;
+  --line: #2c3845;
+  --surface: #17212b;
+  --canvas: #0f161d;
+  --accent-soft: #3a2022;
+  --shadow: 0 8px 24px rgba(0, 0, 0, .24);
+}
+
+.dark-theme nav {
+  background: rgba(23, 33, 43, .94);
+}
+
+.dark-theme .nav-middle .search-box {
+  border-color: var(--line);
+  background: #111a22;
+}
+
+.dark-theme .nav-middle .search-box:focus-within {
+  background: var(--surface);
+}
+
+.dark-theme .icon-button:hover,
+.dark-theme .icon-button[aria-expanded="true"],
+.dark-theme .popover-item:hover,
+.dark-theme .menu-item:hover {
+  background: #24313d;
+}
+
+.dark-theme .profile-tab.active,
+.dark-theme .chip.active {
+  color: #fff;
+}
