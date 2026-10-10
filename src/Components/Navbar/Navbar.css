@@ -226,6 +226,108 @@ nav {
     padding: 6px 0;
 }
 
+.settings-popover {
+    right: -4px;
+    width: 248px;
+    padding: 0 0 8px;
+}
+
+.settings-heading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--line);
+}
+
+.settings-heading strong {
+    font-size: 14px;
+}
+
+.settings-back {
+    width: 26px;
+    height: 26px;
+    border: 0;
+    border-radius: 50%;
+    color: var(--muted);
+    background: transparent;
+    cursor: pointer;
+    font-size: 21px;
+}
+
+.settings-back:hover {
+    background: #f5f7f8;
+}
+
+.settings-label {
+    margin: 14px 14px 7px;
+    color: var(--muted);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+}
+
+.theme-option {
+    display: grid;
+    grid-template-columns: 32px 1fr 18px;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    border: 0;
+    border-left: 2px solid transparent;
+    padding: 10px 14px;
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+    text-align: left;
+}
+
+.theme-option:hover,
+.theme-option.selected {
+    border-left-color: var(--accent);
+    background: #f5f7f8;
+}
+
+.theme-option strong,
+.theme-option small {
+    display: block;
+}
+
+.theme-option strong {
+    font-size: 12px;
+}
+
+.theme-option small {
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.theme-option b {
+    color: var(--accent);
+    font-size: 15px;
+}
+
+.theme-preview {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 9px;
+    font-size: 16px;
+}
+
+.light-preview {
+    color: #ba7200;
+    background: #fff1c9;
+}
+
+.dark-preview {
+    color: #b9c9ff;
+    background: #273754;
+}
+
 .menu-item {
     justify-content: space-between;
     padding: 11px 16px;

@@ -10,7 +10,7 @@ import profile_icon from '../../assets/haritha.png'
 import { Link } from 'react-router-dom'
 import UploadVideo from '../UploadVideo/UploadVideo'
 
-const Navbar = ({setSidebar}) => {
+const Navbar = ({setSidebar, theme, setTheme}) => {
   const [openMenu, setOpenMenu] = useState(null)
   const [isUploadOpen, setIsUploadOpen] = useState(false)
   const menuRef = useRef(null)
@@ -98,8 +98,29 @@ const Navbar = ({setSidebar}) => {
                     <div className="nav-popover more-popover">
                         <button type="button" className="menu-item" onClick={() => setOpenMenu(null)}>Appearance <span>›</span></button>
                         <button type="button" className="menu-item" onClick={() => setOpenMenu(null)}>Language <span>English</span></button>
-                        <button type="button" className="menu-item" onClick={() => setOpenMenu(null)}>Settings <span>›</span></button>
+                        <button type="button" className="menu-item" onClick={() => toggleMenu('settings')}>Settings <span>›</span></button>
                         <button type="button" className="menu-item" onClick={() => setOpenMenu(null)}>Send feedback <span>›</span></button>
+                    </div>
+                )}
+                {openMenu === 'settings' && (
+                    <div className="nav-popover settings-popover">
+                        <div className="settings-heading">
+                            <button type="button" className="settings-back" aria-label="Back to more options" onClick={() => toggleMenu('more')}>‹</button>
+                            <strong>Settings</strong>
+                        </div>
+                        <p className="settings-label">Appearance</p>
+                        <div className="theme-options" role="group" aria-label="Theme">
+                            <button type="button" className={`theme-option ${theme === 'light' ? 'selected' : ''}`} onClick={() => setTheme('light')}>
+                                <span className="theme-preview light-preview">☀</span>
+                                <span><strong>Light mode</strong><small>Bright and clean</small></span>
+                                {theme === 'light' && <b>✓</b>}
+                            </button>
+                            <button type="button" className={`theme-option ${theme === 'dark' ? 'selected' : ''}`} onClick={() => setTheme('dark')}>
+                                <span className="theme-preview dark-preview">☾</span>
+                                <span><strong>Dark mode</strong><small>Easy on the eyes</small></span>
+                                {theme === 'dark' && <b>✓</b>}
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
