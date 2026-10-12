@@ -5,6 +5,8 @@ import Navbar from './Components/Navbar/Navbar'
 import Home from './Pages/Home/Home'
 import Video from './Pages/Video/Video'
 import Profile from './Pages/Profile/Profile'
+import Auth from './Pages/Auth/Auth'
+import AuthRoute from './components/AuthRoute'
 
 
 const App = () => {
@@ -21,12 +23,12 @@ const App = () => {
        <Routes>
         <Route path='/' element={<Home  sidebar ={sidebar}/>} />
         <Route path='/video/:categoryId/:videoId' element={<Video />} />
-        <Route path='/profile' element={<Profile />} />
+        <Route path='/profile' element={<AuthRoute><Profile /></AuthRoute>} />
+        <Route path='/login' element={<Auth key="login" mode="login" />} />
+        <Route path='/signup' element={<Auth key="signup" mode="signup" />} />
         {/* <Route path='/playlist' element={<Playlist />} />
         <Route path='/channel' element={<Channel />} />
         <Route path='/settings' element={<Settings />} />
-        <Route path='/login' element={<Login />} />
-        <Route path='/register' element={<Register />} />
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />
         <Route path='/verify-email' element={<VerifyEmail />} />
