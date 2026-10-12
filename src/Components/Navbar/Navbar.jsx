@@ -9,11 +9,13 @@ import more_icon from '../../assets/more.png'
 import profile_icon from '../../assets/haritha.png'
 import { Link } from 'react-router-dom'
 import UploadVideo from '../UploadVideo/UploadVideo'
+import { useAuth } from '../../context/useAuth'
 
 const Navbar = ({setSidebar, theme, setTheme}) => {
   const [openMenu, setOpenMenu] = useState(null)
   const [isUploadOpen, setIsUploadOpen] = useState(false)
   const menuRef = useRef(null)
+  const { user, signOut } = useAuth()
 
   useEffect(() => {
     const closeMenus = (event) => {
@@ -39,6 +41,12 @@ const Navbar = ({setSidebar, theme, setTheme}) => {
   const openUploadDialog = () => {
     setOpenMenu(null)
     setIsUploadOpen(true)
+  }
+
+  const handleSignOut = async () => {
+    const { error } = await signOut()
+    if (error) console.error('Unable to sign out:', error)
+    setOpenMenu(null)
   }
 
   return (
@@ -124,9 +132,23 @@ const Navbar = ({setSidebar, theme, setTheme}) => {
                     </div>
                 )}
             </div>
-            <Link to='/profile' aria-label="Open your profile">
+            {user ? (
+              <button className="account-button" type="button" onClick={() => toggleMenu('account')} aria-label="Open account menu" aria-expanded={openMenu === 'account'}>
                 <img className='user-icon' src={profile_icon} alt="user profile" />
-            </Link>
+              </button>
+            ) : (
+              <Link className="sign-in-link" to="/login">Sign in</Link>
+            )}
+            {openMenu === 'account' && user && (
+              <div className="nav-popover account-popover">
+                <div className="account-summary">
+                  <strong>{user.user_metadata?.display_name || user.email}</strong>
+                  <small>{user.email}</small>
+                </div>
+                <Link className="menu-item" to="/profile" onClick={() => setOpenMenu(null)}>Your profile <span>›</span></Link>
+                <button type="button" className="menu-item" onClick={handleSignOut}>Sign out <span>↗</span></button>
+              </div>
+            )}
         </div>
     </nav>
     <UploadVideo isOpen={isUploadOpen} onClose={() => setIsUploadOpen(false)} />
