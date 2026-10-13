@@ -63,6 +63,16 @@ nav {
     opacity: .65;
 }
 
+.search-button {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    border: 0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
 .nav-right {
     gap: clamp(8px, 1.4vw, 18px);
 }
