@@ -4,6 +4,13 @@
     gap: 28px 18px;
 }
 
+.feed-message {
+    grid-column: 1 / -1;
+    padding: 48px 16px;
+    color: var(--muted);
+    text-align: center;
+}
+
 .card {
     min-width: 0;
     transition: transform 180ms ease;
