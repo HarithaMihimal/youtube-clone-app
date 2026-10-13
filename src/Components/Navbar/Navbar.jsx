@@ -7,14 +7,17 @@ import upload_icon from '../../assets/upload.png'
 import notification_icon from '../../assets/notification.png'
 import more_icon from '../../assets/more.png'
 import profile_icon from '../../assets/haritha.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import UploadVideo from '../UploadVideo/UploadVideo'
 import { useAuth } from '../../context/useAuth'
 
 const Navbar = ({setSidebar, theme, setTheme}) => {
   const [openMenu, setOpenMenu] = useState(null)
   const [isUploadOpen, setIsUploadOpen] = useState(false)
+  const [searchParams] = useSearchParams()
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search_query') || '')
   const menuRef = useRef(null)
+  const navigate = useNavigate()
   const { user, signOut } = useAuth()
 
   useEffect(() => {
@@ -49,6 +52,21 @@ const Navbar = ({setSidebar, theme, setTheme}) => {
     setOpenMenu(null)
   }
 
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setSearchTerm(searchParams.get('search_query') || '')
+    }, 0)
+
+    return () => clearTimeout(timeoutId)
+  }, [searchParams])
+
+  const handleSearch = (event) => {
+    event.preventDefault()
+    const query = searchTerm.trim()
+
+    navigate(query ? `/?search_query=${encodeURIComponent(query)}` : '/')
+  }
+
   return (
     <>
     <nav className='flex-div'>
@@ -62,10 +80,18 @@ const Navbar = ({setSidebar, theme, setTheme}) => {
            <Link to='/'> <img className='logo' src={logo} alt="logo" /> </Link>
         </div>
         <div className='nav-middle flex-div'>
-            <div className='search-box flex-div'>
-                <input type="text" placeholder='Search' />
-                <img className='search-icon' src={search_icon} alt="search-icon" />
-            </div>
+            <form className='search-box flex-div' onSubmit={handleSearch} role="search">
+                <input
+                    type="search"
+                    placeholder='Search'
+                    aria-label="Search videos"
+                    value={searchTerm}
+                    onChange={(event) => setSearchTerm(event.target.value)}
+                />
+                <button className="search-button" type="submit" aria-label="Search">
+                    <img className='search-icon' src={search_icon} alt="" />
+                </button>
+            </form>
         </div>
         <div className='nav-right flex-div' ref={menuRef}>
             <div className="nav-action">
