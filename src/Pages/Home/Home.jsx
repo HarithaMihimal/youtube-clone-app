@@ -1,11 +1,14 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import './Home.css'
 import Sidebar from '../../Components/Sidebar/Sidebar'
 import Feed from '../../Components/Feed/Feed'
 
 const Home = ({ sidebar }) => {
   const [category, setCategory] = useState(0);
+  const [searchParams] = useSearchParams()
+  const searchQuery = searchParams.get('search_query')?.trim() || ''
   const categories = [
     { id: 0, label: 'All' },
     { id: 10, label: 'Music' },
@@ -23,11 +26,11 @@ const Home = ({ sidebar }) => {
         <div className="home-heading">
           <div>
             <span className="eyebrow">Your daily watchlist</span>
-            <h1>Explore videos</h1>
+            <h1>{searchQuery ? `Search results for "${searchQuery}"` : 'Explore videos'}</h1>
           </div>
-          <p>Fresh picks from creators you follow</p>
+          <p>{searchQuery ? 'Videos matching your search' : 'Fresh picks from creators you follow'}</p>
         </div>
-        <div className="category-chips" aria-label="Video categories">
+        {!searchQuery && <div className="category-chips" aria-label="Video categories">
           {categories.map((item) => (
             <button
               className={category === item.id ? 'chip active' : 'chip'}
@@ -37,8 +40,8 @@ const Home = ({ sidebar }) => {
               {item.label}
             </button>
           ))}
-        </div>
-        <Feed category={category} />
+        </div>}
+        <Feed category={category} searchQuery={searchQuery} />
 
       </div>
     </>
