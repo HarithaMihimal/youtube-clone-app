@@ -37,6 +37,5 @@ export const AuthProvider = ({ children }) => {
     signOut: () => supabase.auth.signOut(),
   }), [session, isLoading])
 
-  
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
