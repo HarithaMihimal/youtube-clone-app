@@ -1,0 +1,44 @@
+name: Greetings
+
+on: [pull_request_target, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+
+    steps:
+      - name: Greet first-time contributors
+        uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+
+          issue-message: |
+            Thank you for opening your first issue!
+
+            We appreciate your contribution to the YouTube Clone App.
+
+            Our team will review your issue as soon as possible.
+            Please make sure you have provided enough details
+            to help us understand and reproduce the problem.
+
+            Happy coding!
+
+          pr-message: |
+            Thank you for your first pull request!
+
+            Welcome to the YouTube Clone App project!
+
+            We appreciate the time and effort you've put into
+            improving this project.
+
+            Please ensure that:
+            - Your code follows the project's coding standards.
+            - Your changes have been tested.
+            - Your pull request includes a clear description.
+
+            We will review your contribution as soon as possible.
+
+            Happy contributing!
