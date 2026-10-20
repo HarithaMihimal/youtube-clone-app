@@ -1,0 +1,39 @@
+name: ESLint Code Quality Check
+
+on:
+  create:
+  push:
+    branches:
+      - main
+      - dev
+      - "feature/**"
+      - "bugfix/**"
+  pull_request:
+    branches:
+      - main
+      - dev
+
+permissions:
+  contents: read
+
+jobs:
+  eslint:
+    name: Run ESLint
+    if: github.event_name != 'create' || github.event.ref_type == 'branch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
