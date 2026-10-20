@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+// eslint-disable react-hooks/exhaustive-deps
+import { useEffect, useState } from 'react'
 import './Recommended.css'
 import { value_converter } from '../../Data'
 import { Link } from 'react-router-dom'
