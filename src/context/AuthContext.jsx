@@ -35,6 +35,15 @@ export const AuthProvider = ({ children }) => {
     user: session?.user ?? null,
     isLoading,
     signOut: () => supabase.auth.signOut(),
+    updateProfile: async (profile) => {
+      const result = await supabase.auth.updateUser({ data: profile })
+      if (!result.error && result.data.user) {
+        setSession((currentSession) => currentSession
+          ? { ...currentSession, user: result.data.user }
+          : currentSession)
+      }
+      return result
+    },
   }), [session, isLoading])
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
