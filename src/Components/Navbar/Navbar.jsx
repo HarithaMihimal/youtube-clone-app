@@ -160,7 +160,7 @@ const Navbar = ({setSidebar, theme, setTheme}) => {
             </div>
             {user ? (
               <button className="account-button" type="button" onClick={() => toggleMenu('account')} aria-label="Open account menu" aria-expanded={openMenu === 'account'}>
-                <img className='user-icon' src={profile_icon} alt="user profile" />
+                <img className='user-icon' src={user.user_metadata?.avatar_url || profile_icon} alt="user profile" />
               </button>
             ) : (
               <Link className="sign-in-link" to="/login">Sign in</Link>
