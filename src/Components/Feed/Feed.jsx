@@ -1,68 +1,79 @@
-// eslint-disable-next-line no-unused-vars
-import React, { useCallback, useEffect, useState } from 'react'
+import { memo, useEffect, useMemo, useRef, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useVirtualizer } from '@tanstack/react-virtual'
 import './Feed.css'
 import { Link } from 'react-router-dom'
 import { value_converter } from '../../Data'
 import moment from 'moment'
+import { getFeed } from '../../lib/youtubeApi'
+import { useDebouncedValue } from '../../hooks/useDebouncedValue'
+
+const FeedCard = memo(({ item }) => {
+    const viewCount = item.statistics?.viewCount
+    return (
+        <Link to={`video/${item.snippet.categoryId}/${item.id}`} className="card">
+            <img loading="lazy" decoding="async" src={item.snippet.thumbnails.medium.url} alt="" />
+            <h2>{item.snippet.title}</h2>
+            <h3>{item.snippet.channelTitle}</h3>
+            <p>{viewCount ? `${value_converter(viewCount)} views` : 'Search result'} &bull; {moment(item.snippet.publishedAt).fromNow()}</p>
+        </Link>
+    )
+})
 
 const Feed = ({ category, searchQuery }) => {
-    const [data, setData] = useState([])
-    const [isLoading, setIsLoading] = useState(true)
-    const [error, setError] = useState('')
-    const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY
-
-    const fetchData = useCallback(async () => {
-        setIsLoading(true)
-        setError('')
-        const categoryParam = category ? `&videoCategoryId=${category}` : ''
-        const endpoint = searchQuery
-            ? `search?part=snippet&type=video&maxResults=50&q=${encodeURIComponent(searchQuery)}`
-            : `videos?part=snippet%2CcontentDetails%2Cstatistics&chart=mostPopular&maxResults=50&regionCode=US${categoryParam}`
-        const videoListUrl = `https://youtube.googleapis.com/youtube/v3/${endpoint}&key=${apiKey}`
-
-        try {
-            const response = await fetch(videoListUrl)
-            const responseData = await response.json()
-            if (!response.ok) throw new Error(responseData.error?.message || 'Unable to load videos.')
-
-            const items = searchQuery
-                ? responseData.items?.map((item) => ({
-                    ...item,
-                    id: item.id.videoId,
-                    snippet: { ...item.snippet, categoryId: '0' },
-                }))
-                : responseData.items
-            setData(items || [])
-        } catch (fetchError) {
-            console.error('Unable to load videos:', fetchError)
-            setData([])
-            setError('Unable to load videos right now. Please try again.')
-        } finally {
-            setIsLoading(false)
-        }
-    }, [category, searchQuery, apiKey])
+    const debouncedSearchQuery = useDebouncedValue(searchQuery)
+    const feedRef = useRef(null)
+    const [columns, setColumns] = useState(1)
+    const { data = [], isPending, isError } = useQuery({
+        queryKey: ['feed', category, debouncedSearchQuery],
+        queryFn: () => getFeed({ category, searchQuery: debouncedSearchQuery }),
+        placeholderData: (previousData) => previousData,
+    })
 
     useEffect(() => {
-        const timeoutId = setTimeout(fetchData, 0)
-        return () => clearTimeout(timeoutId)
-    }, [fetchData])
+        const element = feedRef.current
+        if (!element) return undefined
+        const updateColumns = () => setColumns(Math.max(1, Math.floor(element.clientWidth / 268)))
+        updateColumns()
+        const observer = new ResizeObserver(updateColumns)
+        observer.observe(element)
+        return () => observer.disconnect()
+    }, [])
+
+    const rows = useMemo(() => {
+        const grouped = []
+        for (let index = 0; index < data.length; index += columns) {
+            grouped.push(data.slice(index, index + columns))
+        }
+        return grouped
+    }, [data, columns])
+    const rowVirtualizer = useVirtualizer({
+        count: rows.length,
+        getScrollElement: () => feedRef.current,
+        estimateSize: () => 280,
+        overscan: 2,
+    })
 
     return (
-        <div className="feed">
-            {isLoading && <p className="feed-message">Loading videos...</p>}
-            {!isLoading && error && <p className="feed-message">{error}</p>}
-            {!isLoading && !error && data.length === 0 && <p className="feed-message">No videos found.</p>}
-            {data.map((item) => {
-                const viewCount = item.statistics?.viewCount
-                return (
-                    <Link key={item.id} to={`video/${item.snippet.categoryId}/${item.id}`} className='card'>
-                        <img src={item.snippet.thumbnails.medium.url} alt="" />
-                        <h2>{item.snippet.title}</h2>
-                        <h3>{item.snippet.channelTitle}</h3>
-                        <p>{viewCount ? `${value_converter(viewCount)} views` : 'Search result'} &bull; {moment(item.snippet.publishedAt).fromNow()}</p>
-                    </Link>
-                )
-            })}
+        <div className="feed" ref={feedRef}>
+            {(isPending && data.length === 0) && <p className="feed-message">Loading videos...</p>}
+            {isError && <p className="feed-message">Unable to load videos right now. Please try again.</p>}
+            {!isPending && !isError && data.length === 0 && <p className="feed-message">No videos found.</p>}
+            {data.length > 0 && (
+                <div className="feed-virtual-content" style={{ height: rowVirtualizer.getTotalSize() }}>
+                    {rowVirtualizer.getVirtualItems().map((virtualRow) => (
+                        <div
+                            className="feed-row"
+                            key={virtualRow.key}
+                            ref={rowVirtualizer.measureElement}
+                            data-index={virtualRow.index}
+                            style={{ transform: `translateY(${virtualRow.start}px)`, gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))` }}
+                        >
+                            {rows[virtualRow.index].map((item) => <FeedCard key={item.id} item={item} />)}
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     )
 }
