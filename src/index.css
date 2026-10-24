@@ -49,6 +49,12 @@ input {
   transition: background .2s ease, color .2s ease;
 }
 
+.route-loading {
+  padding: 48px 16px;
+  color: var(--muted);
+  text-align: center;
+}
+
 .dark-theme {
   --ink: #edf2f7;
   --muted: #9aa8b6;
