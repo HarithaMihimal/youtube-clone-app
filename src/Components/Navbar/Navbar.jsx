@@ -11,9 +11,21 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import UploadVideo from '../UploadVideo/UploadVideo'
 import { useAuth } from '../../context/useAuth'
 
+const languages = [
+  'English',
+  'Spanish',
+  'French',
+  'German',
+  'Italian',
+  'Portuguese',
+  'Japanese',
+  'Korean',
+]
+
 const Navbar = ({setSidebar, theme, setTheme}) => {
   const [openMenu, setOpenMenu] = useState(null)
   const [isUploadOpen, setIsUploadOpen] = useState(false)
+  const [language, setLanguage] = useState(() => localStorage.getItem('youtube-language') || 'English')
   const [searchParams] = useSearchParams()
   const [searchTerm, setSearchTerm] = useState(searchParams.get('search_query') || '')
   const menuRef = useRef(null)
@@ -65,6 +77,12 @@ const Navbar = ({setSidebar, theme, setTheme}) => {
     const query = searchTerm.trim()
 
     navigate(query ? `/?search_query=${encodeURIComponent(query)}` : '/')
+  }
+
+  const handleLanguageChange = (selectedLanguage) => {
+    setLanguage(selectedLanguage)
+    localStorage.setItem('youtube-language', selectedLanguage)
+    setOpenMenu(null)
   }
 
   return (
@@ -131,7 +149,7 @@ const Navbar = ({setSidebar, theme, setTheme}) => {
                 {openMenu === 'more' && (
                     <div className="nav-popover more-popover">
                         <button type="button" className="menu-item" onClick={() => setOpenMenu(null)}>Appearance <span>›</span></button>
-                        <button type="button" className="menu-item" onClick={() => setOpenMenu(null)}>Language <span>English</span></button>
+                        <button type="button" className="menu-item" onClick={() => toggleMenu('language')} aria-haspopup="menu" aria-expanded={openMenu === 'language'}>Language <span>{language} ›</span></button>
                         <button type="button" className="menu-item" onClick={() => toggleMenu('settings')}>Settings <span>›</span></button>
                         <button type="button" className="menu-item" onClick={() => setOpenMenu(null)}>Send feedback <span>›</span></button>
                     </div>
@@ -154,6 +172,29 @@ const Navbar = ({setSidebar, theme, setTheme}) => {
                                 <span><strong>Dark mode</strong><small>Easy on the eyes</small></span>
                                 {theme === 'dark' && <b>✓</b>}
                             </button>
+                        </div>
+                    </div>
+                )}
+                {openMenu === 'language' && (
+                    <div className="nav-popover language-popover">
+                        <div className="settings-heading">
+                            <button type="button" className="settings-back" aria-label="Back to more options" onClick={() => toggleMenu('more')}>‹</button>
+                            <strong>Language</strong>
+                        </div>
+                        <div className="language-options" role="menu" aria-label="Choose language">
+                            {languages.map((option) => (
+                                <button
+                                    type="button"
+                                    role="menuitemradio"
+                                    aria-checked={language === option}
+                                    className={`language-option ${language === option ? 'selected' : ''}`}
+                                    key={option}
+                                    onClick={() => handleLanguageChange(option)}
+                                >
+                                    <span>{option}</span>
+                                    {language === option && <b>✓</b>}
+                                </button>
+                            ))}
                         </div>
                     </div>
                 )}

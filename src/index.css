@@ -75,7 +75,11 @@ input {
 .dark-theme .icon-button:hover,
 .dark-theme .icon-button[aria-expanded="true"],
 .dark-theme .popover-item:hover,
-.dark-theme .menu-item:hover {
+.dark-theme .menu-item:hover,
+.dark-theme .language-option:hover,
+.dark-theme .language-option.selected,
+.dark-theme .theme-option:hover,
+.dark-theme .theme-option.selected {
   background: #24313d;
 }
 

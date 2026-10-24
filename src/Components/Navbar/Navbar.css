@@ -242,6 +242,12 @@ nav {
     padding: 0 0 8px;
 }
 
+.language-popover {
+    right: -4px;
+    width: 248px;
+    padding: 0 0 8px;
+}
+
 .settings-heading {
     display: flex;
     align-items: center;
@@ -326,6 +332,36 @@ nav {
     height: 30px;
     border-radius: 9px;
     font-size: 16px;
+}
+
+.language-options {
+    padding: 6px 0;
+}
+
+.language-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border: 0;
+    border-left: 2px solid transparent;
+    padding: 10px 16px;
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+    font-size: 12px;
+    text-align: left;
+}
+
+.language-option:hover,
+.language-option.selected {
+    border-left-color: var(--accent);
+    background: #f5f7f8;
+}
+
+.language-option b {
+    color: var(--accent);
+    font-size: 15px;
 }
 
 .light-preview {
