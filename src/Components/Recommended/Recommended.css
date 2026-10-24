@@ -6,6 +6,13 @@
     padding-right: 4px;
 }
 
+.recommended-virtual-row {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+}
+
 .recommended-card {
     display: grid;
     grid-template-columns: minmax(120px, 45%) 1fr;
@@ -23,6 +30,8 @@
 }
 
 .recommended-card img {
+    background: linear-gradient(110deg, #edf1f3 8%, #f8fafb 18%, #edf1f3 33%);
+    background-size: 200% 100%;
     grid-row: 1 / span 3;
     width: 100%;
     aspect-ratio: 16 / 9;
