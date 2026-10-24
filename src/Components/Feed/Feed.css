@@ -1,7 +1,24 @@
 .feed {
+    position: relative;
+    overflow: auto;
+    max-height: calc(100vh - 220px);
+    min-height: 420px;
+}
+
+.feed-virtual-content,
+.recommended-virtual-content {
+    position: relative;
+    width: 100%;
+}
+
+.feed-row {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr));
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
     gap: 28px 18px;
+    padding-bottom: 28px;
 }
 
 .feed-message {
@@ -21,11 +38,17 @@
 }
 
 .card img {
+    background: linear-gradient(110deg, #edf1f3 8%, #f8fafb 18%, #edf1f3 33%);
+    background-size: 200% 100%;
     width: 100%;
     aspect-ratio: 16 / 9;
     object-fit: cover;
     border-radius: 10px;
     box-shadow: var(--shadow);
+}
+
+.feed-virtual-content {
+    contain: layout;
 }
 
 .card h2 {

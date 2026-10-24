@@ -49,6 +49,12 @@ input {
   transition: background .2s ease, color .2s ease;
 }
 
+.route-loading {
+  padding: 48px 16px;
+  color: var(--muted);
+  text-align: center;
+}
+
 .dark-theme {
   --ink: #edf2f7;
   --muted: #9aa8b6;
@@ -75,7 +81,11 @@ input {
 .dark-theme .icon-button:hover,
 .dark-theme .icon-button[aria-expanded="true"],
 .dark-theme .popover-item:hover,
-.dark-theme .menu-item:hover {
+.dark-theme .menu-item:hover,
+.dark-theme .language-option:hover,
+.dark-theme .language-option.selected,
+.dark-theme .theme-option:hover,
+.dark-theme .theme-option.selected {
   background: #24313d;
 }
 
